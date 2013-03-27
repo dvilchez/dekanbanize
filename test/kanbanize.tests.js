@@ -4,7 +4,8 @@ var nock=require("nock");
 var kanbanize=require("../kanbanize.js");
 
 describe("kanbanize",function(){
-	var api_key="OEypAZ9DSdwq0WZwZBTeZUK7wp5UN0B1JMSBiAry";
+	var api_key="anykey";
+
 	describe("getBoardStructure",function(){
 		it('should get the board structure', function(done)
 		{
