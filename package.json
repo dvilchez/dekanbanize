@@ -1,0 +1,24 @@
+{
+  "name": "dekanbanize",
+  "version": "0.0.0",
+  "description": "a node kanbanize api",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:dvilchezm/dekanbanize.git"
+  },
+  "author": "dvilchezm@gmail.com",
+  "license": "BSD",
+  "readmeFilename": "README.MD",
+  "dependencies": {
+    "should": "~1.2.2",
+    "restler": "~2.0.1",
+    "nock": "~0.16.0"
+  }
+}
