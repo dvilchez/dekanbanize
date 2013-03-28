@@ -6,6 +6,15 @@ var kanbanize=require("../kanbanize.js");
 describe("kanbanize",function(){
 	var api_key="anykey";
 
+	describe("getProjectsAndBoards", function(){
+		it('should get projects and boards', function(done){
+			kanbanize(api_key).getProjectsAndBoards(function(data){
+				data.should.eql(structure);
+				done();
+			});
+		});
+	});
+	
 	describe("getBoardStructure",function(){
 		it('should get the board structure', function(done)
 		{
