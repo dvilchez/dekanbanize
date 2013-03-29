@@ -9,6 +9,7 @@ describe("kanbanize",function(){
 	var projectsAndBoards={projects:[{name:'project',id:'idProject',bords:[{name:'board',id:'idBoard'}]}]};
 	var structure={columns:[{position:0,lcname:'juas',description:'tachan'}],lanes:[{lcname:'test',color:'yellow',description:'descripcion'}]};
 	var settings={usernames:['username'],templates:['template'],types:['TYPE']};
+	var activities={allactivities:'1',page:'1',activities:[{author:'author','event':'event',text:'text',date:'date',taskid:'taskid'}]};
 	var scope=nock('http://kanbanize.com')
 		.matchHeader('apikey', apiKey)
 		.post('/index.php/api/kanbanize/get_projects_and_boards/format/json')
@@ -16,7 +17,10 @@ describe("kanbanize",function(){
 		.post('/index.php/api/kanbanize/get_board_structure/format/json',{boardid:idBoard})
 		.reply(200,structure)
 		.post('/index.php/api/kanbanize/get_board_settings/format/json',{boardid:idBoard})
-		.reply(200,settings);
+		.reply(200,settings)
+		.post('/index.php/api/kanbanize/get_board_activities/format/json'
+			,{boardid:idBoard, fromdate:'last Monday', todate:'now',resultsperpage:'25'})
+		.reply(200,activities);
 
 
 	describe("setXmlResponse", function(){
@@ -52,6 +56,15 @@ describe("kanbanize",function(){
 				data.should.eql(settings);
 				done();
 			});
+		});
+	});
+
+	describe('getBoardActivities', function () {
+		it('should get the board activities', function (done) {
+			kanbanize(apiKey).getBoardActivities(idBoard, 'last Monday', 'now', {resultsperpage:'25'}, function (data) {
+				data.should.eql(activities);
+				done();
+			})
 		});
 	});
 });
