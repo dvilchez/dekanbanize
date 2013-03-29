@@ -5,23 +5,9 @@ var kanbanize=require("../kanbanize.js");
 
 describe("kanbanize",function(){
 	var apiKey="anykey";
-	var idBoard='2';
-	var projectsAndBoards={projects:[{name:'project',id:'idProject',bords:[{name:'board',id:'idBoard'}]}]};
-	var structure={columns:[{position:0,lcname:'juas',description:'tachan'}],lanes:[{lcname:'test',color:'yellow',description:'descripcion'}]};
-	var settings={usernames:['username'],templates:['template'],types:['TYPE']};
-	var activities={allactivities:'1',page:'1',activities:[{author:'author','event':'event',text:'text',date:'date',taskid:'taskid'}]};
+	var kb=kanbanize(apiKey);
 	var scope=nock('http://kanbanize.com')
-		.matchHeader('apikey', apiKey)
-		.post('/index.php/api/kanbanize/get_projects_and_boards/format/json')
-		.reply(200, projectsAndBoards)
-		.post('/index.php/api/kanbanize/get_board_structure/format/json',{boardid:idBoard})
-		.reply(200,structure)
-		.post('/index.php/api/kanbanize/get_board_settings/format/json',{boardid:idBoard})
-		.reply(200,settings)
-		.post('/index.php/api/kanbanize/get_board_activities/format/json'
-			,{boardid:idBoard, fromdate:'last Monday', todate:'now',resultsperpage:'25'})
-		.reply(200,activities);
-
+		.matchHeader('apikey', apiKey);
 
 	describe("setXmlResponse", function(){
 		it('should return xml data');
@@ -32,8 +18,12 @@ describe("kanbanize",function(){
 	});
 
 	describe("getProjectsAndBoards", function(){
+		var projectsAndBoards={projects:[{name:'project',id:'idProject',bords:[{name:'board',id:'idBoard'}]}]};
+		scope.post('/index.php/api/kanbanize/get_projects_and_boards/format/json')
+			 .reply(200, projectsAndBoards);
+	
 		it('should get projects and boards', function(done){
-			kanbanize(apiKey).getProjectsAndBoards(function(data){
+			kb.getProjectsAndBoards(function(data){
 				data.should.eql(projectsAndBoards);
 				done();
 			});
@@ -41,9 +31,13 @@ describe("kanbanize",function(){
 	});
 
 	describe("getBoardStructure",function(){
+		var structure={columns:[{position:0,lcname:'juas',description:'tachan'}],lanes:[{lcname:'test',color:'yellow',description:'descripcion'}]};
+		scope.post('/index.php/api/kanbanize/get_board_structure/format/json',{boardid:'2'})
+			 .reply(200,structure);
+		
 		it('should get the board structure', function(done)
 		{	
-			kanbanize(apiKey).getBoardStructure(idBoard,function(data){
+			kb.getBoardStructure('2',function(data){
 				data.should.eql(structure);
 				done();
 			});
@@ -51,8 +45,12 @@ describe("kanbanize",function(){
 	});
 
 	describe("getBoardSettings", function(){
+		var settings={usernames:['username'],templates:['template'],types:['TYPE']};
+		scope.post('/index.php/api/kanbanize/get_board_settings/format/json',{boardid:'2'})
+			 .reply(200,settings)
+		
 		it('should get the board settings', function (done) {
-			kanbanize(apiKey).getBoardSettings(idBoard, function (data) {
+			kb.getBoardSettings('2', function (data) {
 				data.should.eql(settings);
 				done();
 			});
@@ -60,8 +58,13 @@ describe("kanbanize",function(){
 	});
 
 	describe('getBoardActivities', function () {
+		var activities={allactivities:'1',page:'1',activities:[{author:'author','event':'event',text:'text',date:'date',taskid:'taskid'}]};
+		scope.post('/index.php/api/kanbanize/get_board_activities/format/json'
+				,{boardid:'2', fromdate:'last Monday', todate:'now',resultsperpage:'25'})
+			.reply(200,activities);
+
 		it('should get the board activities', function (done) {
-			kanbanize(apiKey).getBoardActivities(idBoard, 'last Monday', 'now', {resultsperpage:'25'}, function (data) {
+			kb.getBoardActivities('2', 'last Monday', 'now', {resultsperpage:'25'}, function (data) {
 				data.should.eql(activities);
 				done();
 			})
