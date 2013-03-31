@@ -67,7 +67,29 @@ describe("kanbanize",function(){
 			kb.getBoardActivities('2', 'last Monday', 'now', {resultsperpage:'25'}, function (data) {
 				data.should.eql(activities);
 				done();
-			})
+			});
 		});
+	});
+
+	describe('getAllTask', function () {
+		var tasks={tasks:[{}]};
+		scope.post(kb.uriBoardTasks
+				,{boardid:'2', subtasks:'no', container:'backlog',page:'1'})
+			.reply(200,tasks);
+
+		it('should get the board tasks', function (done) {
+			kb.getBoardTasks('2', 'no', 'backlog', '1', function (data) {
+				data.should.eql(tasks);
+				done();
+			});
+		});
+	});
+
+	describe('getAllArchiveTask', function () {
+		it('should get the board archived tasks');
+	});
+
+	describe('searchTask', function(){
+		it('should get the coincident ocurrences')
 	});
 });

@@ -30,12 +30,24 @@ kanbanize.getBoardActivities = function  (idBoard, fromDate, toDate, args, callb
 		,{headers:{'apikey':this.apiKey}}).on('complete',function(data){callback(JSON.parse(data));});
 };
 
+kanbanize.getBoardTasks = function (idBoard, subtasks, container, page, callback){
+	subtasks = subtasks || 'no';
+	container = container || 'backlog';
+	page = page || '1';
+	rest.postJson(kanbanize.domain+this.uriBoardTasks
+		,{'boardid':idBoard, 'subtasks':subtasks, 'container': container, 'page': page}
+		,{headers:{'apikey':this.apiKey}}).on('complete', function (data) {
+			callback(JSON.parse(data));
+		});
+};
+
 module.exports = function(apiKey){
 	kanbanize.domain = 'http://kanbanize.com';
 	kanbanize.uriProjectAndBoards='/index.php/api/kanbanize/get_projects_and_boards/format/json';
 	kanbanize.uriBoardStructure='/index.php/api/kanbanize/get_board_structure/format/json';
 	kanbanize.uriBoardSettings='/index.php/api/kanbanize/get_board_settings/format/json';
 	kanbanize.uriBoardActivities='/index.php/api/kanbanize/get_board_activities/format/json';
+	kanbanize.uriBoardTasks='/index.php/api/kanbanize/get_all_tasks/format/json';
 
 	kanbanize.apiKey=apiKey;
 	return kanbanize;
