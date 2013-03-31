@@ -19,7 +19,7 @@ describe("kanbanize",function(){
 
 	describe("getProjectsAndBoards", function(){
 		var projectsAndBoards={projects:[{name:'project',id:'idProject',bords:[{name:'board',id:'idBoard'}]}]};
-		scope.post('/index.php/api/kanbanize/get_projects_and_boards/format/json')
+		scope.post(kb.uriProjectAndBoards)
 			 .reply(200, projectsAndBoards);
 	
 		it('should get projects and boards', function(done){
@@ -32,7 +32,7 @@ describe("kanbanize",function(){
 
 	describe("getBoardStructure",function(){
 		var structure={columns:[{position:0,lcname:'juas',description:'tachan'}],lanes:[{lcname:'test',color:'yellow',description:'descripcion'}]};
-		scope.post('/index.php/api/kanbanize/get_board_structure/format/json',{boardid:'2'})
+		scope.post(kb.uriBoardStructure,{boardid:'2'})
 			 .reply(200,structure);
 		
 		it('should get the board structure', function(done)
@@ -46,7 +46,7 @@ describe("kanbanize",function(){
 
 	describe("getBoardSettings", function(){
 		var settings={usernames:['username'],templates:['template'],types:['TYPE']};
-		scope.post('/index.php/api/kanbanize/get_board_settings/format/json',{boardid:'2'})
+		scope.post(kb.uriBoardSettings,{boardid:'2'})
 			 .reply(200,settings)
 		
 		it('should get the board settings', function (done) {
@@ -59,7 +59,7 @@ describe("kanbanize",function(){
 
 	describe('getBoardActivities', function () {
 		var activities={allactivities:'1',page:'1',activities:[{author:'author','event':'event',text:'text',date:'date',taskid:'taskid'}]};
-		scope.post('/index.php/api/kanbanize/get_board_activities/format/json'
+		scope.post(kb.uriBoardActivities
 				,{boardid:'2', fromdate:'last Monday', todate:'now',resultsperpage:'25'})
 			.reply(200,activities);
 
