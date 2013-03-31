@@ -72,7 +72,11 @@ describe("kanbanize",function(){
 	});
 
 	describe('getAllTask', function () {
-		var tasks={tasks:[{}]};
+		var tasks={tasks:[{taskid:'1', position:'1', type:'type', asignee:'username', title:'title'
+			, description:'description', subtasks:'0', subtaskscomplete:'0', color:'color', priority:'priority'
+			, size:'size', deadline:'deadline', deadlineoriginalformat:'yyyy-mm-dd', extlink:'link'
+			, tags:'tag1 tag2', columnid:'1', laneid:'1', leadtime:'1', blocked:'0', blockedreason:'reason'
+			, subtasksdetails:'?', columnname:'name', lanename:'name', columnpath:'Column.Subcolumn.SubSubColumn'}]};
 		scope.post(kb.uriBoardTasks
 				,{boardid:'2', subtasks:'no', container:'backlog',page:'1'})
 			.reply(200,tasks);
