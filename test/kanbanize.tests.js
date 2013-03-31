@@ -72,7 +72,7 @@ describe("kanbanize",function(){
 	});
 
 	describe('getAllTask', function () {
-		var tasks={tasks:[{taskid:'1', position:'1', type:'type', asignee:'username', title:'title'
+		var tasks={tasks:[{taskid:'1', position:'1', type:'type', assignee:'username', title:'title'
 			, description:'description', subtasks:'0', subtaskscomplete:'0', color:'color', priority:'priority'
 			, size:'size', deadline:'deadline', deadlineoriginalformat:'yyyy-mm-dd', extlink:'link'
 			, tags:'tag1 tag2', columnid:'1', laneid:'1', leadtime:'1', blocked:'0', blockedreason:'reason'
@@ -96,4 +96,22 @@ describe("kanbanize",function(){
 	describe('searchTask', function(){
 		it('should get the coincident ocurrences')
 	});
+
+	describe('createTask', function () {
+		var taskId={taskid:'1'};
+		scope.post(kb.uriCreateTask
+				,{boardid:'1',title:'title', description:'description', priority:'low'
+				,assignee:'username', color:'99b399', size:'XL', tags:'tags tags'
+				, deadline:'yyyy-mm-dd', extlink:'http://link', type:'type name', template:'template name'})
+			.reply(200,taskId);
+
+		it('should create task in board', function (done) {
+			kb.createTask('1', {title:'title', description:'description', priority:'low'
+				,assignee:'username', color:'99b399', size:'XL', tags:'tags tags'
+				, deadline:'yyyy-mm-dd', extlink:'http://link', type:'type name', template:'template name'}, function (data) {
+				data.should.eql(taskId);
+				done();
+			});
+		});
+	});		
 });

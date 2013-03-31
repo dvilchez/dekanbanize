@@ -41,6 +41,14 @@ kanbanize.getBoardTasks = function (idBoard, subtasks, container, page, callback
 		});
 };
 
+kanbanize.createTask = function (idBoard, task, callback){
+	rest.postJson(kanbanize.domain+this.uriBoardTasks
+		,{'boardid':idBoard}.combine(task)
+		,{headers:{'apikey':this.apiKey}}).on('complete', function (data) {
+			callback(JSON.parse(data));
+		});
+};
+
 module.exports = function(apiKey){
 	kanbanize.domain = 'http://kanbanize.com';
 	kanbanize.uriProjectAndBoards='/index.php/api/kanbanize/get_projects_and_boards/format/json';
@@ -48,6 +56,7 @@ module.exports = function(apiKey){
 	kanbanize.uriBoardSettings='/index.php/api/kanbanize/get_board_settings/format/json';
 	kanbanize.uriBoardActivities='/index.php/api/kanbanize/get_board_activities/format/json';
 	kanbanize.uriBoardTasks='/index.php/api/kanbanize/get_all_tasks/format/json';
+	kanbanize.uriCreateTask='/index.php/api/kanbanize/get_all_tasks/format/json';
 
 	kanbanize.apiKey=apiKey;
 	return kanbanize;
