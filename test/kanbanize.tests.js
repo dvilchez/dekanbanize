@@ -113,6 +113,14 @@ describe("kanbanize",function(){
 		it('should get the board archived tasks');
 	});
 
+	describe('searchTasks', function(){
+		
+		it('should get the coincident ocurrences', function (done){
+			kb.searchTasks('1','T18123/13', function (data){
+				data.should.eql(coincidentsTasks);
+				done();
+			});
+		});
 	});
 
 	describe('createTask', function () {

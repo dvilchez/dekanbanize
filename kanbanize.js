@@ -53,6 +53,17 @@ kanbanize.getBoardTasks = function (idBoard, subtasks, container, page, callback
 		});
 };
 
+kanbanize.searchTasks = function (idBoard, textToSearch, callback){
+	//...
+	var foundTasks=[];
+	process.nextTick(function (){
+		callback({});
+	});
+	//boardTask.map(filter, foundTasks)
+
+	return foundTasks;
+};
+
 kanbanize.createTask = function (idBoard, task, callback){
 	rest.postJson(kanbanize.domain+this.uriBoardTasks
 		,{'boardid':idBoard}.combine(task)
