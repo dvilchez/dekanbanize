@@ -30,6 +30,26 @@ describe("kanbanize",function(){
 		});
 	});
 
+	describe("getProject",function(){
+		it("should get the right project", function(done){
+			kb.getProject('1', function(data){
+
+			});
+		});
+	});
+
+	describe("getBoard", function(){
+		it("should get the board", function(done){
+			kb.getBoard('1', function(data){
+				data.id.should.be('1');
+				data.name.should.be('test_board');
+				data.idProject.should.be('1');
+				data.nameProject.should.be('test_project');
+				done();
+			});
+		});
+	});
+
 	describe("getBoardStructure",function(){
 		var structure={columns:[{position:0,lcname:'juas',description:'tachan'}],lanes:[{lcname:'test',color:'yellow',description:'descripcion'}]};
 		scope.post(kb.uriBoardStructure,{boardid:'2'})
@@ -93,8 +113,6 @@ describe("kanbanize",function(){
 		it('should get the board archived tasks');
 	});
 
-	describe('searchTask', function(){
-		it('should get the coincident ocurrences')
 	});
 
 	describe('createTask', function () {

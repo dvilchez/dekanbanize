@@ -12,6 +12,18 @@ kanbanize.getProjectsAndBoards = function(callback){
 		,{headers:{'apikey':this.apiKey}}).on('complete', function(data){callback(JSON.parse(data));})
 };
 
+kanbanize.getBoard = function(idProject,idBoard, callback){
+	/*getProjectsAndBoards(function(data){
+		var projects=
+		callback({
+			'idProject'		: idProject,
+			'nameProject'	: 
+			'id'		: idBoard,
+			'name' 	: data[idProject].Name
+		});
+	});*/
+};
+
 kanbanize.getBoardStructure = function(idBoard,callback){
 	rest.postJson(kanbanize.domain+this.uriBoardStructure
 		,{'boardid':idBoard}
